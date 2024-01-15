@@ -34,7 +34,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb://127.0.0.1:27017/userDB");
+// mongoose.connect("mongodb://127.0.0.1:27017/userDB");
+
+mongoose.connect(process.env.MONGO_URI).then(() => {
+    console.log('Connected to MongoDB');
+}).catch((err) => {
+    console.error('Failed to connect to MongoDB', err);
+});
 
 const userSchema = new mongoose.Schema({
     email: String,
